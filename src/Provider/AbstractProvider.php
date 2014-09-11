@@ -4,9 +4,9 @@ namespace League\OAuth2\Client\Provider;
 
 use Guzzle\Service\Client as GuzzleClient;
 use Guzzle\Http\Exception\BadResponseException;
-use League\OAuth2\Client\Token\AccessToken as AccessToken;
 use League\OAuth2\Client\Exception\IDPException as IDPException;
 use League\OAuth2\Client\Grant\GrantInterface;
+use League\OAuth2\Client\Token\AbstractToken;
 
 abstract class AbstractProvider implements ProviderInterface
 {
@@ -69,9 +69,9 @@ abstract class AbstractProvider implements ProviderInterface
 
     abstract public function urlAccessToken();
 
-    abstract public function urlUserDetails(\League\OAuth2\Client\Token\AccessToken $token);
+    abstract public function urlUserDetails(AbstractToken $token);
 
-    abstract public function userDetails($response, \League\OAuth2\Client\Token\AccessToken $token);
+    abstract public function userDetails($response, AbstractToken $token);
 
     public function getScopes()
     {
@@ -178,28 +178,28 @@ abstract class AbstractProvider implements ProviderInterface
         return $grant->handleResponse($result);
     }
 
-    public function getUserDetails(AccessToken $token)
+    public function getUserDetails(AbstractToken $token)
     {
         $response = $this->fetchUserDetails($token);
 
         return $this->userDetails(json_decode($response), $token);
     }
 
-    public function getUserUid(AccessToken $token)
+    public function getUserUid(AbstractToken $token)
     {
         $response = $this->fetchUserDetails($token, true);
 
         return $this->userUid(json_decode($response), $token);
     }
 
-    public function getUserEmail(AccessToken $token)
+    public function getUserEmail(AbstractToken $token)
     {
         $response = $this->fetchUserDetails($token, true);
 
         return $this->userEmail(json_decode($response), $token);
     }
 
-    public function getUserScreenName(AccessToken $token)
+    public function getUserScreenName(AbstractToken $token)
     {
         $response = $this->fetchUserDetails($token, true);
 
@@ -230,7 +230,7 @@ abstract class AbstractProvider implements ProviderInterface
         return $url;
     }
 
-    protected function fetchUserDetails(AccessToken $token)
+    protected function fetchUserDetails(AbstractToken $token)
     {
         $url = $this->urlUserDetails($token);
 

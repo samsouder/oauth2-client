@@ -2,7 +2,7 @@
 
 namespace League\OAuth2\Client\Provider;
 
-use League\OAuth2\Client\Token\AccessToken as AccessToken;
+use League\OAuth2\Client\Token\AbstractToken;
 
 interface ProviderInterface
 {
@@ -10,9 +10,9 @@ interface ProviderInterface
 
     public function urlAccessToken();
 
-    public function urlUserDetails(AccessToken $token);
+    public function urlUserDetails(AbstractToken $token);
 
-    public function userDetails($response, AccessToken $token);
+    public function userDetails($response, AbstractToken $token);
 
     public function getScopes();
 
@@ -24,11 +24,11 @@ interface ProviderInterface
 
     public function getAccessToken($grant = 'authorization_code', $params = array());
 
-    public function getUserDetails(AccessToken $token);
+    public function getUserDetails(AbstractToken $token);
 
-    public function getUserUid(AccessToken $token);
+    public function getUserUid(AbstractToken $token);
 
-    public function getUserEmail(AccessToken $token);
+    public function getUserEmail(AbstractToken $token);
 
-    public function getUserScreenName(AccessToken $token);
+    public function getUserScreenName(AbstractToken $token);
 }

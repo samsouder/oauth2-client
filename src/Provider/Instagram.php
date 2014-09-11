@@ -19,12 +19,12 @@ class Instagram extends AbstractProvider
         return 'https://api.instagram.com/oauth/access_token';
     }
 
-    public function urlUserDetails(\League\OAuth2\Client\Token\AccessToken $token)
+    public function urlUserDetails(\League\OAuth2\Client\Token\AbstractToken $token)
     {
         return 'https://api.instagram.com/v1/users/self?access_token='.$token;
     }
 
-    public function userDetails($response, \League\OAuth2\Client\Token\AccessToken $token)
+    public function userDetails($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
 
         $user = new User;
@@ -42,17 +42,17 @@ class Instagram extends AbstractProvider
         return $user;
     }
 
-    public function userUid($response, \League\OAuth2\Client\Token\AccessToken $token)
+    public function userUid($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
         return $response->data->id;
     }
 
-    public function userEmail($response, \League\OAuth2\Client\Token\AccessToken $token)
+    public function userEmail($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
         return;
     }
 
-    public function userScreenName($response, \League\OAuth2\Client\Token\AccessToken $token)
+    public function userScreenName($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
         return $response->data->full_name;
     }

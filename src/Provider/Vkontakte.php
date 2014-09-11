@@ -3,7 +3,6 @@
 namespace League\OAuth2\Client\Provider;
 
 use League\OAuth2\Client\Entity\User;
-use League\OAuth2\Client\Token\AccessToken;
 
 class Vkontakte extends AbstractProvider
 {
@@ -20,7 +19,7 @@ class Vkontakte extends AbstractProvider
         return 'https://oauth.vk.com/access_token';
     }
 
-    public function urlUserDetails(AccessToken $token)
+    public function urlUserDetails(\League\OAuth2\Client\Token\AbstractToken $token)
     {
         $fields = array('nickname',
             'screen_name',
@@ -52,7 +51,7 @@ class Vkontakte extends AbstractProvider
             . implode(",", $fields)."&access_token={$token}";
     }
 
-    public function userDetails($response, AccessToken $token)
+    public function userDetails($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
         $response = $response->response[0];
 
@@ -77,21 +76,21 @@ class Vkontakte extends AbstractProvider
         return $user;
     }
 
-    public function userUid($response, AccessToken $token)
+    public function userUid($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
         $response = $response->response[0];
 
         return $response->uid;
     }
 
-    public function userEmail($response, AccessToken $token)
+    public function userEmail($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
         $response = $response->response[0];
 
         return isset($response->email) && $response->email ? $response->email : null;
     }
 
-    public function userScreenName($response, AccessToken $token)
+    public function userScreenName($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
         $response = $response->response[0];
 

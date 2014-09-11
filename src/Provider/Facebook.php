@@ -19,12 +19,12 @@ class Facebook extends AbstractProvider
         return 'https://graph.facebook.com/oauth/access_token';
     }
 
-    public function urlUserDetails(\League\OAuth2\Client\Token\AccessToken $token)
+    public function urlUserDetails(\League\OAuth2\Client\Token\AbstractToken $token)
     {
         return 'https://graph.facebook.com/me?access_token='.$token;
     }
 
-    public function userDetails($response, \League\OAuth2\Client\Token\AccessToken $token)
+    public function userDetails($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
         $client = $this->getHttpClient();
         $client->setBaseUrl('https://graph.facebook.com/me/picture?type=normal&access_token=' . $token->accessToken);
@@ -56,17 +56,17 @@ class Facebook extends AbstractProvider
         return $user;
     }
 
-    public function userUid($response, \League\OAuth2\Client\Token\AccessToken $token)
+    public function userUid($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
         return $response->id;
     }
 
-    public function userEmail($response, \League\OAuth2\Client\Token\AccessToken $token)
+    public function userEmail($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
         return isset($response->email) && $response->email ? $response->email : null;
     }
 
-    public function userScreenName($response, \League\OAuth2\Client\Token\AccessToken $token)
+    public function userScreenName($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
         return array($response->first_name, $response->last_name);
     }

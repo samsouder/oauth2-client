@@ -3,7 +3,6 @@
 namespace League\OAuth2\Client\Provider;
 
 use League\OAuth2\Client\Entity\User;
-use League\OAuth2\Client\Token\AccessToken;
 
 class LinkedIn extends AbstractProvider
 {
@@ -24,13 +23,13 @@ class LinkedIn extends AbstractProvider
         return 'https://www.linkedin.com/uas/oauth2/accessToken';
     }
 
-    public function urlUserDetails(AccessToken $token)
+    public function urlUserDetails(\League\OAuth2\Client\Token\AbstractToken $token)
     {
         return 'https://api.linkedin.com/v1/people/~:(' . implode(",", $this->fields)
             . ')?format=json&oauth2_access_token=' . $token;
     }
 
-    public function userDetails($response, AccessToken $token)
+    public function userDetails($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
         $user = new User;
 
@@ -53,19 +52,19 @@ class LinkedIn extends AbstractProvider
         return $user;
     }
 
-    public function userUid($response, AccessToken $token)
+    public function userUid($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
         return $response->id;
     }
 
-    public function userEmail($response, AccessToken $token)
+    public function userEmail($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
         return isset($response->emailAddress) && $response->emailAddress
             ? $response->emailAddress
             : null;
     }
 
-    public function userScreenName($response, AccessToken $token)
+    public function userScreenName($response, \League\OAuth2\Client\Token\AbstractToken $token)
     {
         return array($response->firstName, $response->lastName);
     }
